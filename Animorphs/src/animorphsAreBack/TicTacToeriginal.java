@@ -3,10 +3,18 @@ package animorphsAreBack;
 public class TicTacToeriginal extends TicTacToe {
 
 	private int[][] board;
+
 	private int size;
 
 	public TicTacToeriginal(int size) {
 		board = new int[size][size];
+
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				this.board[i][j] = 0;
+			}
+		}
+
 		this.size = size;
 	}
 
@@ -42,43 +50,38 @@ public class TicTacToeriginal extends TicTacToe {
 	@Override
 	public int winner() {
 
-		int xICounter = 0;
-		int oICounter = 0;
-		int xJCounter = 0;
-		int oJCounter = 0;
+		boolean xWins = false;
+		boolean oWins = false;
 
-		for (int i = 1; i <= size; i++) {
-			for (int j = 1; j <= size; j++) {
-
-				// Adds values if there is a square on the board that has X
-				// values
-				if (board[i-1][j-1] == 1) {
-					xICounter = xICounter + i;
-					xJCounter = xJCounter + j;
-				}
-
-				// Adds values if there is a square on the board that has O
-				// values
-				if (board[i-1][j-1] == 2) {
-					oICounter = oICounter + i;
-					oJCounter = oJCounter + j;
-				}
-
-				// If values add up there is a series of O values.
-				if (oICounter == size * 2 || oJCounter == size * 2) {
-					return 2;
-				}
-
-				// If values add up there is a series of X values.
-				if (xICounter == size * 2 || xJCounter == size * 2) {
-					return 1;
-				}
-
+		// Check Rows && colums
+		for (int i = 0; i < size; i++) {
+			if (getBoard()[i][0] == 1 && getBoard()[i][1] == 1 && getBoard()[i][2] == 1) {
+				xWins = true;
+			} 
+			if (getBoard()[i][0] == 2 && getBoard()[i][1] == 2 && getBoard()[i][2] == 2) {
+				oWins = true;
 			}
-
+			if (getBoard()[0][i] == 1 && getBoard()[1][i] == 1 && getBoard()[2][i] == 1) {
+				xWins = true;
+			} 
+			if (getBoard()[0][i] == 2 && getBoard()[1][i] == 2 && getBoard()[2][i] == 2) {
+				oWins = true;
+			}	
+		}
+		// Diagonal lines
+		for (int i = 0; i < size; i++) {
+			for(int j = 0; j < size; j++){
+				if(size % 2 == 0){
+					
+				} else {
+					
+				}
+				
+			}
 		}
 
 		return -1; // return zeor if there isn't a match
 
 	}
+
 }
