@@ -50,68 +50,73 @@ public class TicTacToeriginal extends TicTacToe {
 	@Override
 	public int winner() {
 
-		boolean xWins = false;
-		boolean oWins = false;
-
 		// Check Rows && colums
 		for (int i = 0; i < size; i++) {
+
+			// X row check
 			if (getBoard()[i][0] == 1 && getBoard()[i][1] == 1 && getBoard()[i][2] == 1) {
-				xWins = true;
+				return 1;
 			}
+
+			// O row Check
 			if (getBoard()[i][0] == 2 && getBoard()[i][1] == 2 && getBoard()[i][2] == 2) {
-				oWins = true;
+				return 2;
 			}
+
+			// X column Check
 			if (getBoard()[0][i] == 1 && getBoard()[1][i] == 1 && getBoard()[2][i] == 1) {
-				xWins = true;
+				return 1;
 			}
+
+			// O column Check
 			if (getBoard()[0][i] == 2 && getBoard()[1][i] == 2 && getBoard()[2][i] == 2) {
-				oWins = true;
+				return 2;
 			}
 		}
 
 		int j = size;
-		
+
 		int xCountForwardSlash = 0;
 		int oCountForwardSlash = 0;
 		int xCountBackSlash = 0;
 		int oCountBackSlash = 0;
-		
+
 		// Diagonal lines
 		for (int i = 0; i < size; i++) {
-			
+
 			// Checks the forward diagonal of the matrix for x
 			if (getBoard()[i][j - 1] == 1) {
-				oCountForwardSlash += 1;
-				if(oCountForwardSlash == size)
+				xCountForwardSlash += 1;
+				if (xCountForwardSlash == size)
 					return 1;
 			}
-			
+
 			// Checks the forward diagonal of the matrix for o
 			if (getBoard()[i][j - 1] == 2) {
 				oCountForwardSlash += 1;
-				if(oCountForwardSlash == size);
+				if (oCountForwardSlash == size)
 					return 2;
 			}
-			
+
 			j--;
-			
+
 			// Checks the backward diagonal of the matrix of x
-			if(getBoard()[i][i] == 1){
+			if (getBoard()[i][i] == 1) {
 				xCountBackSlash += 1;
-				if(xCountBackSlash == size)
+				if (xCountBackSlash == size)
 					return 1;
 			}
-			
+
 			// checks the backward diagonal of the matrix for o.
-			if(getBoard()[i][i] == 2){
+			if (getBoard()[i][i] == 2) {
 				oCountBackSlash += 1;
-				if(oCountBackSlash == size)
+				if (oCountBackSlash == size)
 					return 2;
 			}
-			
+
 		}
 
-		return -1; // return '-1'  if there isn't a match
+		return -1; // return '-1' if there isn't a match
 
 	}
 
