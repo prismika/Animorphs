@@ -35,7 +35,7 @@ public class CandidateAlgorithm extends Player {
 	}
 
 	private void constructStrategyTree() {
-		// TODO
+		//TODO
 	}
 
 	private Node decode(String codon, boolean terminal) throws InvalidCodingException{
