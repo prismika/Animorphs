@@ -2,9 +2,28 @@ package decisionTreeNodes;
 
 public abstract class Node {
 	private Node child[] = {null, null};
-	private boolean isRoot;
+	private boolean isRoot = false;
+	private int[] args = {0,0};
+	private String codon;
+	
+	public Node(String codon){
+		this.codon = codon;
+	}
+	
+	public String getCodon(){
+		return codon;
+	}
+	
+	public void setRoot(){
+		isRoot = true;
+	}
+	
 	public boolean isRoot(){
 		return isRoot;
+	}
+	
+	public void setArg(int argNum, int value){
+		args[argNum] = value;
 	}
 	
 	/**
@@ -26,6 +45,10 @@ public abstract class Node {
 	
 	public Node getChild(int childNumber){
 		return child[childNumber];
+	}
+	
+	public boolean hasChildSlots(){
+		return child[0] != null || child[1] != null;
 	}
 	
 }
