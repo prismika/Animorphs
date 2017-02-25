@@ -52,16 +52,16 @@ public class TicTacToeriginal extends TicTacToe {
 
 				// Adds values if there is a square on the board that has X
 				// values
-				if (board[i][j] == 1) {
+				if (board[i-1][j-1] == 1) {
 					xICounter = xICounter + i;
 					xJCounter = xJCounter + j;
 				}
 
 				// Adds values if there is a square on the board that has O
 				// values
-				if (board[i][j] == 2) {
+				if (board[i-1][j-1] == 2) {
 					oICounter = oICounter + i;
-					xJCounter = xJCounter + j;
+					oJCounter = oJCounter + j;
 				}
 
 				// If values add up there is a series of O values.
