@@ -7,8 +7,8 @@ public class RandomTester {
 
 		int gameSize = 3;
 
-		int testBoard[][] = { { 2, 1, 1 }, 
-							  { 1, 2, 1 }, 
+		int testBoard[][] = { { 2, 2, 1 }, 
+							  { 0, 2, 1 }, 
 							  { 1, 2, 0 } };
 		
 		for(int i = 0; i < testBoard.length; i++){
