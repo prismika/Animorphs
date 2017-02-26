@@ -1,7 +1,6 @@
 package animorphsAreBack;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,16 +9,27 @@ import java.util.Scanner;
 
 public class TheHungerGames implements Runnable {
 
-	private static final int POPULATIONSIZE = 256;//Must be even
-	private static final int GAMESIZE = 4;
-	private static final int ITERATIONS = 2;
+	private static final int POPULATIONSIZE = 128;//Must be even
+	private static int GAMESIZE = 4;
+	private static int iterations = 2000;
 	private static CandidateAlgorithm[] population = new CandidateAlgorithm[POPULATIONSIZE];
 
-	private static final int SWAPODDS = 5;
-	private static final int MUTATEODDS = 2;
+	private static int SWAPODDS = 5;
+	private static int MUTATEODDS = 2;
 
 	public static void main(String args[]) throws IOException {
-
+		if(args.length == 1){
+			iterations = Integer.parseInt(args[0], 10);
+		}
+		if(args.length == 2){
+			iterations = Integer.parseInt(args[0], 10);
+			GAMESIZE = Integer.parseInt(args[1], 10);
+		}
+		if(args.length == 3){
+			iterations = Integer.parseInt(args[0], 10);
+			GAMESIZE = Integer.parseInt(args[1], 10);
+			MUTATEODDS = Integer.parseInt(args[2], 10);
+		}
 		// Create initial population
 		for(int i = 0; i < POPULATIONSIZE; i++){
 			population[i] = new CandidateAlgorithm(0);
@@ -27,7 +37,7 @@ public class TheHungerGames implements Runnable {
 		
 		
 		
-		for(int generation = 0; generation < ITERATIONS; generation++){
+		for(int generation = 0; generation < iterations; generation++){
 			for(int i = 0; i < POPULATIONSIZE; i++){
 				for(int j = i + 1; j < POPULATIONSIZE; j++){
 					if(population[i].isValid() && population[j].isValid()){
@@ -108,6 +118,13 @@ public class TheHungerGames implements Runnable {
 			enemy.executeMove(challenge.getBoard());
 			
 		}
+		if(challenge.winner() == 1){
+			System.out.println("X wins!");
+		}else if(challenge.winner() == 2){
+			System.out.println("O wins!");
+		}else if(challenge.winner() == -1){
+			System.out.println("Draw!");
+		}
 		
 
 	}
@@ -134,8 +151,7 @@ public class TheHungerGames implements Runnable {
 
 	@Override
 	public void run() {
-
-		// TODO
+		
 
 	}
 
