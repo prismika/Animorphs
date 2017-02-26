@@ -1,10 +1,13 @@
 package animorphsAreBack;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class TheHungerGames implements Runnable {
 
-	private static final int POPULATIONSIZE = 256;
+	private static final int POPULATIONSIZE = 256;//Must be even
 	private static final int GAMESIZE = 3;
-	private static final int ITERATIONS = 100;
+	private static final int ITERATIONS = 10;
 	private static CandidateAlgorithm[] population = new CandidateAlgorithm[POPULATIONSIZE];
 
 	public static void main(String args[]) {
@@ -34,8 +37,27 @@ public class TheHungerGames implements Runnable {
 					}
 				}
 			}
-			//Generation tested
+			//Generation testing complete
+//			for(int i = 0; i < POPULATIONSIZE; i++){
+//				System.out.println(population[i].getFitness());
+//			}
 			CandidateAlgorithm[] nextGen = new CandidateAlgorithm[POPULATIONSIZE];
+			ArrayList<CandidateAlgorithm> wheel = new ArrayList<>();
+			for(int i = 0; i < POPULATIONSIZE; i++){
+				for(int j = 0; j < population[i].getFitness(); j++){
+					wheel.add(population[i]);
+				}
+			}
+			Random selection = new Random();
+			for(int i = 0; i < nextGen.length; i += 2){
+				int choice1 = selection.nextInt(wheel.size());
+				int choice2 = selection.nextInt(wheel.size());
+				CandidateAlgorithm[] twins = breedPlayers(wheel.get(choice1), wheel.get(choice2));
+				nextGen[i] = twins[0];
+				nextGen[i+1] = twins[1];
+			}
+			population = nextGen;
+			
 		}
 		
 //		CandidateAlgorithm playerX;
@@ -83,18 +105,21 @@ public class TheHungerGames implements Runnable {
 
 	}
 
-	/**
-	 * 
-	 * 
-	 * @param player
-	 */
-	private static void picNextGeneration(CandidateAlgorithm player) {
-		// TODO array list with random number gen.
+	private static CandidateAlgorithm[] breedPlayers(CandidateAlgorithm first, CandidateAlgorithm second) {
+		CandidateAlgorithm[] reply = new CandidateAlgorithm[2];
+		Random rand = new Random();
+		
+//		reply[0] = first;
+//		reply[1] = second;
+		return reply;
 	}
-
-	private CandidateAlgorithm[] breedPlayers(CandidateAlgorithm first, CandidateAlgorithm second) {
-		// TODO
-		return null;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
