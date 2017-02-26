@@ -9,6 +9,8 @@ import decisionTreeNodes.*;
 public class CandidateAlgorithm extends Player {
 	private BitSet dna;
 	private int dnaLength;
+	private Node root;
+	private boolean TreeIsValid;
 	private final static int CODONLENGTH = 14;
 	private final static int CODONNUMBER = 32;
 	private final static int SEQUENCELENGTH = CODONLENGTH * CODONNUMBER;
@@ -33,7 +35,7 @@ public class CandidateAlgorithm extends Player {
 		constructStrategyTree();
 	}
 
-	public void randomize() {
+	private void randomize() {
 		for (int i = 0; i < dnaLength; i++) {
 			dna.set(i, Util.randBit());
 		}
@@ -49,7 +51,7 @@ public class CandidateAlgorithm extends Player {
 			else
 				rootCodon += "0";
 		}
-		Node root = decode(rootCodon.substring(0, 4), false);
+		root = decode(rootCodon.substring(0, 4), false);
 		root.setRoot();
 		root.setArg(0,Integer.parseInt(rootCodon.substring(4, 8), 2));
 		root.setArg(1,Integer.parseInt(rootCodon.substring(8, 12), 2));
@@ -67,28 +69,34 @@ public class CandidateAlgorithm extends Player {
 					thisCodon += "0";
 			}
 			
-			Node branch;
+			Node branch;//TODO Finish rewriting
 			boolean invalid = false;
 			boolean terminal = thisCodon.substring(12, 14) == "11";
 			try{
 				branch = decode(thisCodon.substring(0, 4), terminal);
 				branch.setArg(0,Integer.parseInt(thisCodon.substring(4, 8), 2));
 				branch.setArg(1,Integer.parseInt(thisCodon.substring(8, 12), 2));
-			}catch(InvalidCodingException e){
-				invalid = true;
-			}
-			Node newParent = nodesWithChildSlots.getFirst();
-			newParent.setChild(branch);
-				if(!newParent.hasChildSlots()){
+				Node newParent = nodesWithChildSlots.getFirst();
+				newParent.setChild(branch);
+				if(!newParent.hasChildSlots())
 					nodesWithChildSlots.removeFirst();
-				}
-			nodesWithChildSlots.add(branch);
+				if(branch.hasChildSlots())
+					nodesWithChildSlots.add(branch);
+			}catch(InvalidCodingException e){
+			}
+			
 			
 			codonNumber++;
-			//TODO check if node must be terminal
+			
 			//TODO set done to true when done
 		}
+		terminate();
 		
+		
+	}
+	
+	private void terminate(){
+		//TODO
 	}
 
 	private Node decode(String codon, boolean terminal) throws InvalidCodingException{
