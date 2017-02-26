@@ -1,6 +1,5 @@
 package animorphsAreBack;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.LinkedList;
 
@@ -13,7 +12,7 @@ public class CandidateAlgorithm extends Player {
 	private boolean treeIsValid = true;
 	private int fitness = 0;
 	private final static int CODONLENGTH = 14;
-	private final static int CODONNUMBER = 32;
+	private final static int CODONNUMBER = 64;
 	private final static int SEQUENCELENGTH = CODONLENGTH * CODONNUMBER;
 
 	/**
@@ -44,6 +43,9 @@ public class CandidateAlgorithm extends Player {
 	
 	public void addToFitness(int fitnessPlus){
 		fitness += fitnessPlus;
+	}
+	public int getFitness(){
+		return fitness;
 	}
 	
 	private void constructStrategyTree() {//TODO Make sure to check that every dna string has at least CODONLENGTH elements
@@ -191,6 +193,7 @@ public class CandidateAlgorithm extends Player {
 	@Override
 	public void executeMove(int[][] board) {
 		// TODO Auto-generated method stub
+		//player is superclass variable
 		
 	}
 	
