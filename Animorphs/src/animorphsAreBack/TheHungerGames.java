@@ -1,60 +1,66 @@
 package animorphsAreBack;
 
-import java.util.Random;
-
 public class TheHungerGames implements Runnable {
 
-	private static final int POPULATIONSIZE = 10;
+	private static final int POPULATIONSIZE = 32;
+	private static final int GAMESIZE = 3;
+	private static CandidateAlgorithm[] population = new CandidateAlgorithm[POPULATIONSIZE];
 
 	public static void main(String args[]) {
 
-		// Create two players
-
-		int gameSize = 3;
-
-		CandidateAlgorithm playerX = new CandidateAlgorithm(1);
-		CandidateAlgorithm playerO = new CandidateAlgorithm(2);
-
-		// Thread thd1 = new Thread();
-
-		TicTacToeriginal ticTacTest = new TicTacToeriginal(3);
-
-		Random whoStartsFirst = new Random();
-
-		int startOrder = whoStartsFirst.nextInt(1);
-
-		int weiner = 0;
-		for (int i = 0; i < 2; i++) {
-			if (startOrder == 0) {
-
-				while (ticTacTest.winner() == 0) {
-
-					playerX.executeMove(ticTacTest.getBoard());
-					playerO.executeMove(ticTacTest.getBoard());
-
-				}
-
-				// This sets the winner of the battle
-				weiner = ticTacTest.winner();
-
-			} else {
-
-				while (ticTacTest.winner() == 0) {
-
-					playerO.executeMove(ticTacTest.getBoard());
-					playerX.executeMove(ticTacTest.getBoard());
-
-				}
-
-				// Sets the winner of the battle
-				weiner = ticTacTest.winner();
-
-			}
-			
-			startOrder = Math.abs(startOrder - 1);
-			
+		// Create players
+		for(CandidateAlgorithm i : population){
+			i = new CandidateAlgorithm(0);
 		}
+		
+		for(int i = 0; i < POPULATIONSIZE; i++){
+			for(int j = i + 1; j < POPULATIONSIZE; j++){
+				int fit = 0;
+				population[i].setPlayer(1);
+				population[j].setPlayer(2);
+				fit += pit(population[i], population[j]);
+				fit -= pit(population[j], population[i]);
+				population[i].addToFitness(Math.max(0, fit));
+				population[j].addToFitness(Math.max(0, -1*fit));
+			}
+		}
+		
+//		CandidateAlgorithm playerX;
+//		CandidateAlgorithm playerO;
+//		// Thread thd1 = new Thread();
+//
+//		TicTacToeriginal ticTacTest = new TicTacToeriginal(GAMESIZE);
+//		
+//		int weiner = 0;
+//		while (ticTacTest.winner() == 0) {
+//
+//			playerX.executeMove(ticTacTest.getBoard());
+//			playerO.executeMove(ticTacTest.getBoard());
+//			weiner = ticTacTest.winner();
+//
+//		}
+		
 
+	}
+	
+	public static int pit(CandidateAlgorithm playerX,CandidateAlgorithm playerY){
+		TicTacToeriginal tictactest = new TicTacToeriginal(GAMESIZE);
+		int turn = 1;
+		while(tictactest.winner() == 0){
+			if(turn == 1){
+				playerX.executeMove(tictactest.getBoard());
+				turn = 2;
+			}else{
+				playerY.executeMove(tictactest.getBoard());
+				turn = 1;
+			}
+		}
+		switch(tictactest.winner()){
+		case 1: return 1;
+		case 2: return -1;
+		case -1: return 0;
+		default: throw new IllegalStateException("Winner number was: " + tictactest.winner());
+		}
 	}
 
 	@Override
@@ -73,8 +79,9 @@ public class TheHungerGames implements Runnable {
 		// TODO array list with random number gen.
 	}
 
-	private static void breedPlayers(CandidateAlgorithm first, CandidateAlgorithm second) {
+	private CandidateAlgorithm[] breedPlayers(CandidateAlgorithm first, CandidateAlgorithm second) {
 		// TODO
+		return null;
 	}
 
 }

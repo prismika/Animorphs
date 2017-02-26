@@ -2,6 +2,7 @@ package animorphsAreBack;
 
 import java.util.BitSet;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 import decisionTreeNodes.*;
 
@@ -33,6 +34,10 @@ public class CandidateAlgorithm extends Player {
 		this.dna = dna;
 		this.dnaLength = dna.size();
 		constructStrategyTree();
+	}
+	
+	public void setPlayer(int player){
+		playerNumber = player;
 	}
 
 	private void randomize() {
@@ -82,7 +87,13 @@ public class CandidateAlgorithm extends Player {
 				branch = decode(thisCodon, terminal);
 				branch.setArg(0,Integer.parseInt(thisCodon.substring(4, 8), 2));
 				branch.setArg(1,Integer.parseInt(thisCodon.substring(8, 12), 2));
-				Node newParent = nodesWithChildSlots.getFirst();
+				Node newParent;
+				try{
+					newParent = nodesWithChildSlots.getFirst();
+				}catch(NoSuchElementException e){
+					terminate(root);
+					return;
+				}
 				newParent.setChild(branch);
 				if(!newParent.hasChildSlots())
 					nodesWithChildSlots.removeFirst();
