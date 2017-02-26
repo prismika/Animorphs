@@ -10,7 +10,7 @@ public class CandidateAlgorithm extends Player {
 	private BitSet dna;
 	private int dnaLength;
 	private Node root;
-	private boolean TreeIsValid;
+	private boolean treeIsValid = true;
 	private final static int CODONLENGTH = 14;
 	private final static int CODONNUMBER = 32;
 	private final static int SEQUENCELENGTH = CODONLENGTH * CODONNUMBER;
@@ -51,16 +51,20 @@ public class CandidateAlgorithm extends Player {
 			else
 				rootCodon += "0";
 		}
-		root = decode(rootCodon.substring(0, 4), false);
-		root.setRoot();
-		root.setArg(0,Integer.parseInt(rootCodon.substring(4, 8), 2));
-		root.setArg(1,Integer.parseInt(rootCodon.substring(8, 12), 2));
-		nodesWithChildSlots.add(root);
+		try{
+			root = decode(rootCodon.substring(0, 4), false);
+			root.setRoot();
+			root.setArg(0,Integer.parseInt(rootCodon.substring(4, 8), 2));
+			root.setArg(1,Integer.parseInt(rootCodon.substring(8, 12), 2));
+			nodesWithChildSlots.add(root);
+		}catch(InvalidCodingException e){
+			this.treeIsValid = false;
+			return;
+		}
 		
 		//Construct all other nodes
-		boolean done = false;
 		int codonNumber = 1;
-		while(!done){
+		while((codonNumber+1)*CODONLENGTH < dna.size()){
 			String thisCodon = "";
 			for(int i = 0; i < CODONLENGTH; i++){
 				if(dna.get(i+CODONLENGTH*codonNumber) == true)
@@ -69,11 +73,10 @@ public class CandidateAlgorithm extends Player {
 					thisCodon += "0";
 			}
 			
-			Node branch;//TODO Finish rewriting
-			boolean invalid = false;
+			Node branch;
 			boolean terminal = thisCodon.substring(12, 14) == "11";
 			try{
-				branch = decode(thisCodon.substring(0, 4), terminal);
+				branch = decode(thisCodon, terminal);
 				branch.setArg(0,Integer.parseInt(thisCodon.substring(4, 8), 2));
 				branch.setArg(1,Integer.parseInt(thisCodon.substring(8, 12), 2));
 				Node newParent = nodesWithChildSlots.getFirst();
@@ -91,24 +94,35 @@ public class CandidateAlgorithm extends Player {
 			//TODO set done to true when done
 		}
 		terminate(root);
-		
-		
 	}
 	
 	private void terminate(Node node){
-		if(node.getChildNumber() < 2){
-			node = decode(node.getCodon().substring(0, 4), true);
-			node.setArg(0,Integer.parseInt(node.getCodon().substring(4, 8), 2));
-			node.setArg(1,Integer.parseInt(node.getCodon().substring(8, 12), 2));
+		if(node.getChild(0).getChildNumber() < 2){
+			node.setChild(0, decode(node.getChild(0).getCodon(), true));
+			node.getChild(0).setArg(0,Integer.parseInt(node.getChild(0).getCodon().substring(4, 8), 2));
+			node.getChild(0).setArg(1,Integer.parseInt(node.getChild(0).getCodon().substring(8, 12), 2));
+			
+			node.getChild(0).clearChildren();
 		}else{
 			terminate(node.getChild(0));
+		}
+		
+		if(node.getChild(1).getChildNumber() < 2){
+			node.setChild(1, decode(node.getChild(1).getCodon(), true));
+			node.getChild(1).setArg(1,Integer.parseInt(node.getChild(1).getCodon().substring(4, 8), 2));
+			node.getChild(1).setArg(1,Integer.parseInt(node.getChild(1).getCodon().substring(8, 12), 2));
+			
+			node.getChild(1).clearChildren();
+		}else{
 			terminate(node.getChild(1));
 		}
 	}
 
 	private Node decode(String codon, boolean terminal) throws InvalidCodingException{
+		String subCodon = codon.substring(0,4);
 		if(!terminal){
-			switch(codon){
+			switch(subCodon){
+			//Conditionals
 			case "0000": 
 			case "0010": return new Filled(codon);
 			case "0001": return new MyFilled(codon);
@@ -127,40 +141,69 @@ public class CandidateAlgorithm extends Player {
 			case "1100":
 			case "1101":
 			case "1110":
-			case "1111": throw new InvalidCodingException();
+			case "1111":
+				throw new InvalidCodingException();
 			
 			default: throw new IllegalArgumentException("Impossible conditional codon:" + codon);
 			}
 		}else{
-			switch(codon){
-			case "0000":
-			case "0100": return new PlaceUp(codon);
-			case "0010":
-			case "0110": return new PlaceDown(codon);
-			case "0001":
-			case "0101": return new PlaceLeft(codon);
-			case "0011":
-			case "0111": return new PlaceRight(codon);
+			//Terminals
+			switch(subCodon){
 			
-			case "1000":
-			case "1001":
+			case "0000":
+			case "0100":
+			case "1000": 
+				return new PlaceUp(codon);
+			case "0010":
+			case "0110": 
 			case "1010":
+				return new PlaceDown(codon);
+			case "0001":
+			case "0101": 
+			case "1001":
+				return new PlaceLeft(codon);
+			case "0011":
+			case "0111": 
 			case "1011":
+				return new PlaceRight(codon);
+			
 			case "1100":
 			case "1101":
 			case "1110":
-			case "1111": throw new InvalidCodingException();
+			case "1111": 
+				throw new InvalidCodingException();
 			
 			default: throw new IllegalArgumentException("Impossible terminal codon: " + codon);
 			}
 		
 		}
 	}
+	
+	public boolean isValid(){
+		return treeIsValid;
+	}
 
 	@Override
 	public void executeMove(int[][] board) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public String treeToString(){
+		if(!this.treeIsValid){
+			return "Tree Invalid Strategy";
+		}
+		return subtreeToString(root,0);
+	}
+	private String subtreeToString(Node node, int level){
+		
+		if(node.getChildNumber() == 0){
+			return level + node.getClass().getSimpleName()+"|||";
+		}
+		if(node.getChildNumber() == 2){
+			return level + node.getClass().getSimpleName() + " " + subtreeToString(node.getChild(0),level+1) + " " + subtreeToString(node.getChild(1), level+1);
+		}
+		return "Children: " + node.getChildNumber();
 	}
 
 }
