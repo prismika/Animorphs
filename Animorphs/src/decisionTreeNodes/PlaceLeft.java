@@ -14,6 +14,7 @@ public class PlaceLeft extends Terminal{
 			for(int row = 0; row < board.length; row++){
 				if(board[Math.floorMod(x-row,board.length)][Math.floorMod(y-col,board.length)] == 0){
 					board[Math.floorMod(x-row,board.length)][Math.floorMod(y-col,board.length)] = player;
+					return;
 				}
 			}
 		}

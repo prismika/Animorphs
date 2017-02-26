@@ -105,4 +105,11 @@ public class JUnitTests {
 		
 		assertTrue(t.winner() == 1);
 	}
+	@Test
+	public void t11(){
+		CandidateAlgorithm c = new CandidateAlgorithm(1);
+		TicTacToeriginal t = new TicTacToeriginal(3);
+		c.executeMove(t.getBoard());
+		System.out.println(t.toString());
+	}
 }

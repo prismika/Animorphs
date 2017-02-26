@@ -68,7 +68,7 @@ public class TicTacToeriginal extends TicTacToe {
 				}
 			}
 			// ensures that if a row is matched that the last isn't checked.
-			if (playerNumber != -1) {
+			if (playerNumber != -1 && playerNumber != 0) {
 				break;
 			}
 		}
@@ -86,7 +86,7 @@ public class TicTacToeriginal extends TicTacToe {
 				}
 				// ensures that if a column is matched that the last isn't
 				// checked.
-				if (playerNumber != -1) {
+				if (playerNumber != -1 && playerNumber != 0) {
 					break;
 				}
 			}

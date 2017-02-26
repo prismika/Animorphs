@@ -14,6 +14,7 @@ public class PlaceDown extends Terminal{
 			for(int col = 0; col < board.length; col++){
 				if(board[Math.floorMod(x+row,board.length)][Math.floorMod(y+col,board.length)] == 0){
 					board[Math.floorMod(x+row,board.length)][Math.floorMod(y+col,board.length)] = player;
+					return;
 				}
 			}
 		}

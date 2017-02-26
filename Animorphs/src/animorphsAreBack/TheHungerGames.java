@@ -12,7 +12,7 @@ public class TheHungerGames implements Runnable {
 
 	private static final int POPULATIONSIZE = 256;//Must be even
 	private static final int GAMESIZE = 5;
-	private static final int ITERATIONS = 100;
+	private static final int ITERATIONS = 1000;
 	private static CandidateAlgorithm[] population = new CandidateAlgorithm[POPULATIONSIZE];
 
 	private static final int SWAPODDS = 10;
@@ -45,11 +45,12 @@ public class TheHungerGames implements Runnable {
 					}
 				}
 			}
+			System.out.print("|");
 			//Generation testing complete
 			
-			for(int i = 0; i < POPULATIONSIZE; i++){
-				System.out.println(population[i].getFitness());
-			}
+//			for(int i = 0; i < POPULATIONSIZE; i++){
+//				System.out.println(population[i].getFitness());
+//			}
 			CandidateAlgorithm[] nextGen = new CandidateAlgorithm[POPULATIONSIZE];
 			ArrayList<CandidateAlgorithm> wheel = new ArrayList<>();
 			for(int i = 0; i < POPULATIONSIZE; i++){
@@ -79,7 +80,7 @@ public class TheHungerGames implements Runnable {
 		
 		print.close();
 		
-		CandidateAlgorithm enemy;
+		CandidateAlgorithm enemy = population[0];
 		int max = 0;
 		for(CandidateAlgorithm c : population){
 			if(c.getFitness() > max){
@@ -89,6 +90,7 @@ public class TheHungerGames implements Runnable {
 		}
 		
 		//Play against enemy
+		enemy.setPlayer(2);
 		Scanner in = new Scanner(System.in);
 		TicTacToeriginal challenge = new TicTacToeriginal(GAMESIZE);
 		System.out.println("Ready to play?\nYou are Player 1.\nRemember all values are zero indexed.");
@@ -99,6 +101,7 @@ public class TheHungerGames implements Runnable {
 			System.out.println("Column?");
 			int col = in.nextInt();
 			challenge.move(row, col, 1);
+			enemy.executeMove(challenge.getBoard());
 			
 		}
 		
