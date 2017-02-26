@@ -1,18 +1,23 @@
 package animorphsAreBack;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class TheHungerGames implements Runnable {
 
 	private static final int POPULATIONSIZE = 256;//Must be even
-	private static final int GAMESIZE = 3;
-	private static final int ITERATIONS = 10;
+	private static final int GAMESIZE = 5;
+	private static final int ITERATIONS = 100;
 	private static CandidateAlgorithm[] population = new CandidateAlgorithm[POPULATIONSIZE];
-	
-	private static final int SWAPODDS = 6;
 
-	public static void main(String args[]) {
+	private static final int SWAPODDS = 10;
+	private static final int MUTATEODDS = 8;
+
+	public static void main(String args[]) throws IOException {
 
 		// Create initial population
 		for(int i = 0; i < POPULATIONSIZE; i++){
@@ -58,10 +63,18 @@ public class TheHungerGames implements Runnable {
 				CandidateAlgorithm[] twins = breedPlayers(wheel.get(choice1), wheel.get(choice2));
 				nextGen[i] = twins[0];
 				nextGen[i+1] = twins[1];
+				mutate(nextGen[i]);
+				mutate(nextGen[i+1]);
 			}
 			population = nextGen;
 			
 		}
+		
+		//Iterations done
+		FileWriter save = new FileWriter("best.txt");
+		BufferedWriter print = new BufferedWriter(save);
+		for(int i = 0; i < 10; i++)
+			print.write(population[i].getDNAString() + "\n");
 		
 //		CandidateAlgorithm playerX;
 //		CandidateAlgorithm playerO;
@@ -122,6 +135,15 @@ public class TheHungerGames implements Runnable {
 //		reply[0] = first;
 //		reply[1] = second;
 		return reply;
+	}
+	
+	private static void mutate(CandidateAlgorithm alg){
+		Random rand = new Random();
+		for(int i = 0; i < alg.getDNA().size(); i++){
+			if(rand.nextInt(100) <= MUTATEODDS){
+				alg.getDNA().flip(i);
+			}
+		}
 	}
 	
 	

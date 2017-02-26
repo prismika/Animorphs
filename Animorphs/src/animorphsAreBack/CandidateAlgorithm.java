@@ -13,7 +13,7 @@ public class CandidateAlgorithm extends Player {
 	private boolean treeIsValid = true;
 	private int fitness = 0;
 	private final static int CODONLENGTH = 14;
-	private final static int CODONNUMBER = 64;
+	private final static int CODONNUMBER = 128;
 	private final static int SEQUENCELENGTH = CODONLENGTH * CODONNUMBER;
 
 	/**
@@ -51,6 +51,17 @@ public class CandidateAlgorithm extends Player {
 	
 	public BitSet getDNA(){
 		return dna;
+	}
+	
+	public String getDNAString(){
+		String reply = "";
+		for(int i = 0; i < dna.size(); i++){
+			if(dna.get(i))
+				reply+="1";
+			else
+				reply+="0";
+		}
+		return reply;
 	}
 	
 	private void constructStrategyTree() {//TODO Make sure to check that every dna string has at least CODONLENGTH elements
