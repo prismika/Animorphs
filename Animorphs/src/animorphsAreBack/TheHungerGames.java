@@ -9,6 +9,8 @@ public class TheHungerGames implements Runnable {
 	private static final int GAMESIZE = 3;
 	private static final int ITERATIONS = 10;
 	private static CandidateAlgorithm[] population = new CandidateAlgorithm[POPULATIONSIZE];
+	
+	private static final int SWAPODDS = 6;
 
 	public static void main(String args[]) {
 
@@ -38,9 +40,10 @@ public class TheHungerGames implements Runnable {
 				}
 			}
 			//Generation testing complete
-//			for(int i = 0; i < POPULATIONSIZE; i++){
-//				System.out.println(population[i].getFitness());
-//			}
+			
+			for(int i = 0; i < POPULATIONSIZE; i++){
+				System.out.println(population[i].getFitness());
+			}
 			CandidateAlgorithm[] nextGen = new CandidateAlgorithm[POPULATIONSIZE];
 			ArrayList<CandidateAlgorithm> wheel = new ArrayList<>();
 			for(int i = 0; i < POPULATIONSIZE; i++){
@@ -106,8 +109,15 @@ public class TheHungerGames implements Runnable {
 	}
 
 	private static CandidateAlgorithm[] breedPlayers(CandidateAlgorithm first, CandidateAlgorithm second) {
-		CandidateAlgorithm[] reply = new CandidateAlgorithm[2];
+		CandidateAlgorithm[] reply = {new CandidateAlgorithm(0,first.getDNA()),new CandidateAlgorithm(0,second.getDNA())};
 		Random rand = new Random();
+		
+		for(int i = 0; i < first.getDNA().size(); i++){
+			if(rand.nextInt(100)<=SWAPODDS){
+				reply[0].getDNA().set(i,second.getDNA().get(i));
+				reply[1].getDNA().set(i,first.getDNA().get(i));
+			}
+		}
 		
 //		reply[0] = first;
 //		reply[1] = second;

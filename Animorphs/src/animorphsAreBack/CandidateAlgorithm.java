@@ -49,6 +49,10 @@ public class CandidateAlgorithm extends Player {
 	public void addToFitness(int fitnessPlus){fitness += fitnessPlus;}
 	public int getFitness(){return fitness;}
 	
+	public BitSet getDNA(){
+		return dna;
+	}
+	
 	private void constructStrategyTree() {//TODO Make sure to check that every dna string has at least CODONLENGTH elements
 		LinkedList<Node> nodesWithChildSlots = new LinkedList<>();
 		//Construct root node
