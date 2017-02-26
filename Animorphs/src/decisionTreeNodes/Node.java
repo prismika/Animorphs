@@ -23,7 +23,7 @@ public abstract class Node {
 	}
 	
 	public void setArg(int argNum, int value){
-		args[argNum] = value;
+		args[argNum] = Math.abs(value);
 	}
 	
 	/**

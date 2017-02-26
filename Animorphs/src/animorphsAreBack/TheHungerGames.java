@@ -9,8 +9,8 @@ public class TheHungerGames implements Runnable {
 	public static void main(String args[]) {
 
 		// Create players
-		for(CandidateAlgorithm i : population){
-			i = new CandidateAlgorithm(0);
+		for(int i = 0; i < POPULATIONSIZE; i++){
+			population[i] = new CandidateAlgorithm(0);
 		}
 		
 		for(int i = 0; i < POPULATIONSIZE; i++){
