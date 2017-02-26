@@ -74,7 +74,7 @@ public class CandidateAlgorithm extends Player {
 			}
 			
 			Node branch;
-			boolean terminal = thisCodon.substring(12, 14) == "11";
+			boolean terminal = thisCodon.substring(12, 14).equals("11");
 			try{
 				branch = decode(thisCodon, terminal);
 				branch.setArg(0,Integer.parseInt(thisCodon.substring(4, 8), 2));
