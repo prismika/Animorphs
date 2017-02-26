@@ -103,6 +103,7 @@ public class TicTacToeriginal extends TicTacToe {
 			}
 		}
 
+		// Checks the back-slash cross for matching pairs.
 		if (playerNumber == -1) {
 			for (int i = 0, j = 0; i < size - 1; i++, j++) {
 				if (getBoard()[i][j] == getBoard()[i + 1][j + 1]) {

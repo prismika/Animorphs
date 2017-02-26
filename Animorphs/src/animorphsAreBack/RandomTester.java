@@ -7,9 +7,9 @@ public class RandomTester {
 
 		int gameSize = 3;
 
-		int testBoard[][] = { { 2, 1, 2 }, 
-							  { 1, 0, 1 }, 
-							  { 0, 1, 2 } };
+		int testBoard[][] = { { 1, 1, 2 }, 
+							  { 1, 1, 1 }, 
+							  { 2, 2, 1 } };
 
 		TicTacToeriginal ttto = new TicTacToeriginal(testBoard, gameSize);
 
