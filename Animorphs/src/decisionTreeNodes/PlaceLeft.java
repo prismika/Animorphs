@@ -8,12 +8,12 @@ public class PlaceLeft extends Terminal{
 
 	@Override
 	public void place(int[][] board, int player) {
-		int x = args[0];
-		int y = args[1];
+		int x = Math.floorMod(args[0],board.length);
+		int y = Math.floorMod(args[1],board.length);
 		for(int col = 0; col < board.length; col--){
 			for(int row = 0; row < board.length; row--){
-				if(board[(x+row)%board.length][(y+col)%board.length] == 0){
-					board[(x+row)%board.length][(y+col)%board.length] = player;
+				if(board[Math.floorMod(x+row,board.length)][(y+col)%board.length] == 0){
+					board[Math.floorMod(x+row,board.length)][(y+col)%board.length] = player;
 				}
 			}
 		}
