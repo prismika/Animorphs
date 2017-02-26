@@ -2,27 +2,40 @@ package animorphsAreBack;
 
 public class TheHungerGames implements Runnable {
 
-	private static final int POPULATIONSIZE = 32;
+	private static final int POPULATIONSIZE = 256;
 	private static final int GAMESIZE = 3;
+	private static final int ITERATIONS = 100;
 	private static CandidateAlgorithm[] population = new CandidateAlgorithm[POPULATIONSIZE];
 
 	public static void main(String args[]) {
 
-		// Create players
+		// Create initial population
 		for(int i = 0; i < POPULATIONSIZE; i++){
 			population[i] = new CandidateAlgorithm(0);
 		}
 		
-		for(int i = 0; i < POPULATIONSIZE; i++){
-			for(int j = i + 1; j < POPULATIONSIZE; j++){
-				int fit = 0;
-				population[i].setPlayer(1);
-				population[j].setPlayer(2);
-				fit += pit(population[i], population[j]);
-				fit -= pit(population[j], population[i]);
-				population[i].addToFitness(Math.max(0, fit));
-				population[j].addToFitness(Math.max(0, -1*fit));
+		
+		
+		for(int generation = 0; generation < ITERATIONS; generation++){
+			for(int i = 0; i < POPULATIONSIZE; i++){
+				for(int j = i + 1; j < POPULATIONSIZE; j++){
+					if(population[i].isValid() && population[j].isValid()){
+						int fit = 0;
+						population[i].setPlayer(1);
+						population[j].setPlayer(2);
+						fit += pit(population[i], population[j]);
+						fit -= pit(population[j], population[i]);
+						population[i].addToFitness(Math.max(0, fit));
+						population[j].addToFitness(Math.max(0, -1*fit));
+					}else{
+						if(population[i].isValid()){
+							population[i].addToFitness(1);
+						}
+					}
+				}
 			}
+			//Generation tested
+			CandidateAlgorithm[] nextGen = new CandidateAlgorithm[POPULATIONSIZE];
 		}
 		
 //		CandidateAlgorithm playerX;
