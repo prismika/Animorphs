@@ -11,12 +11,12 @@ import java.util.Scanner;
 public class TheHungerGames implements Runnable {
 
 	private static final int POPULATIONSIZE = 256;//Must be even
-	private static final int GAMESIZE = 5;
-	private static final int ITERATIONS = 1000;
+	private static final int GAMESIZE = 4;
+	private static final int ITERATIONS = 2;
 	private static CandidateAlgorithm[] population = new CandidateAlgorithm[POPULATIONSIZE];
 
-	private static final int SWAPODDS = 10;
-	private static final int MUTATEODDS = 8;
+	private static final int SWAPODDS = 5;
+	private static final int MUTATEODDS = 2;
 
 	public static void main(String args[]) throws IOException {
 
@@ -46,6 +46,8 @@ public class TheHungerGames implements Runnable {
 				}
 			}
 			System.out.print("|");
+			if(generation%50 ==0)
+				System.out.println();
 			//Generation testing complete
 			
 //			for(int i = 0; i < POPULATIONSIZE; i++){
@@ -75,10 +77,10 @@ public class TheHungerGames implements Runnable {
 		//Iterations done
 		FileWriter save = new FileWriter("best.txt");
 		BufferedWriter print = new BufferedWriter(save);
-		for(int i = 0; i < 10; i++)
-			print.write(population[i].getDNAString() + "\n");
-		
-		print.close();
+//		for(int i = 0; i < 10; i++)
+//			print.write(population[i].getDNAString() + "\n");
+//		
+//		print.close();
 		
 		CandidateAlgorithm enemy = population[0];
 		int max = 0;
@@ -88,18 +90,20 @@ public class TheHungerGames implements Runnable {
 				max = c.getFitness();
 			}
 		}
+		print.write(enemy.getDNAString());
 		
 		//Play against enemy
 		enemy.setPlayer(2);
+		System.out.println("\n" + enemy.treeToString());
 		Scanner in = new Scanner(System.in);
 		TicTacToeriginal challenge = new TicTacToeriginal(GAMESIZE);
-		System.out.println("Ready to play?\nYou are Player 1.\nRemember all values are zero indexed.");
+		System.out.println("Ready to play?\nYou are Player 1.");
 		while(challenge.winner() == 0){
-			System.out.println(challenge.toString() + "\n");
+			System.out.println(challenge.print());
 			System.out.println("Row?");
-			int row = in.nextInt();
+			int row = in.nextInt() - 1;
 			System.out.println("Column?");
-			int col = in.nextInt();
+			int col = in.nextInt() - 1;
 			challenge.move(row, col, 1);
 			enemy.executeMove(challenge.getBoard());
 			

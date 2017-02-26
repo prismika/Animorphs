@@ -183,6 +183,35 @@ public class TicTacToeriginal extends TicTacToe {
 
 		return temp;
 	}
+	
+	public String print() {
+
+		if (this.getClass() != TicTacToeriginal.class)
+			return "null";
+
+		String temp = new String();
+		for(int j = 0; j < size; j++)
+			temp+="----";
+		temp+="\n";
+		for (int i = 0; i < size; i++) {
+			temp += "|";
+			for(int j = 0; j < size; j++){
+				if(board[i][j] == 1){
+					temp+=" X |";
+				}else if(board[i][j] == 2){
+					temp+=" O |";
+				}else{
+					temp+="   |";
+				}
+			}
+			temp+="\n";
+			for(int j = 0; j < size; j++)
+				temp+="----";
+			temp+="\n";
+		}
+
+		return temp;
+	}
 
 	/**
 	 * Compares two different boards and checks their validity.
