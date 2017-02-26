@@ -91,4 +91,18 @@ public class JUnitTests {
 		CandidateAlgorithm pro = new CandidateAlgorithm(1);
 		System.out.println(pro.treeToString());
 	}
+	
+	@Test
+	public void t10(){
+		TicTacToeriginal t = new TicTacToeriginal(5);
+		t.move(1, 0, 1);
+		t.move(1, 1, 1);
+		t.move(1, 2, 1);
+		t.move(1, 3, 1);
+		t.move(1, 4, 1);
+		
+		System.out.println(t.toString());
+		
+		assertTrue(t.winner() == 1);
+	}
 }

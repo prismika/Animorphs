@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class TheHungerGames implements Runnable {
 
@@ -76,20 +77,30 @@ public class TheHungerGames implements Runnable {
 		for(int i = 0; i < 10; i++)
 			print.write(population[i].getDNAString() + "\n");
 		
-//		CandidateAlgorithm playerX;
-//		CandidateAlgorithm playerO;
-//		// Thread thd1 = new Thread();
-//
-//		TicTacToeriginal ticTacTest = new TicTacToeriginal(GAMESIZE);
-//		
-//		int weiner = 0;
-//		while (ticTacTest.winner() == 0) {
-//
-//			playerX.executeMove(ticTacTest.getBoard());
-//			playerO.executeMove(ticTacTest.getBoard());
-//			weiner = ticTacTest.winner();
-//
-//		}
+		print.close();
+		
+		CandidateAlgorithm enemy;
+		int max = 0;
+		for(CandidateAlgorithm c : population){
+			if(c.getFitness() > max){
+				enemy = c;
+				max = c.getFitness();
+			}
+		}
+		
+		//Play against enemy
+		Scanner in = new Scanner(System.in);
+		TicTacToeriginal challenge = new TicTacToeriginal(GAMESIZE);
+		System.out.println("Ready to play?\nYou are Player 1.\nRemember all values are zero indexed.");
+		while(challenge.winner() == 0){
+			System.out.println(challenge.toString() + "\n");
+			System.out.println("Row?");
+			int row = in.nextInt();
+			System.out.println("Column?");
+			int col = in.nextInt();
+			challenge.move(row, col, 1);
+			
+		}
 		
 
 	}
