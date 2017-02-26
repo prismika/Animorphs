@@ -11,6 +11,7 @@ public class CandidateAlgorithm extends Player {
 	private int dnaLength;
 	private Node root;
 	private boolean treeIsValid = true;
+	private int fitness = 0;
 	private final static int CODONLENGTH = 14;
 	private final static int CODONNUMBER = 32;
 	private final static int SEQUENCELENGTH = CODONLENGTH * CODONNUMBER;
@@ -40,7 +41,11 @@ public class CandidateAlgorithm extends Player {
 			dna.set(i, Util.randBit());
 		}
 	}
-
+	
+	public void addToFitness(int fitnessPlus){
+		fitness += fitnessPlus;
+	}
+	
 	private void constructStrategyTree() {//TODO Make sure to check that every dna string has at least CODONLENGTH elements
 		LinkedList<Node> nodesWithChildSlots = new LinkedList<>();
 		//Construct root node
