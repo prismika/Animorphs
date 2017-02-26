@@ -90,13 +90,20 @@ public class CandidateAlgorithm extends Player {
 			
 			//TODO set done to true when done
 		}
-		terminate();
+		terminate(root);
 		
 		
 	}
 	
-	private void terminate(){
-		//TODO
+	private void terminate(Node node){
+		if(node.getChildNumber() < 2){
+			node = decode(node.getCodon().substring(0, 4), true);
+			node.setArg(0,Integer.parseInt(node.getCodon().substring(4, 8), 2));
+			node.setArg(1,Integer.parseInt(node.getCodon().substring(8, 12), 2));
+		}else{
+			terminate(node.getChild(0));
+			terminate(node.getChild(1));
+		}
 	}
 
 	private Node decode(String codon, boolean terminal) throws InvalidCodingException{
@@ -148,6 +155,12 @@ public class CandidateAlgorithm extends Player {
 			}
 		
 		}
+	}
+
+	@Override
+	public void executeMove(int[][] board) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
