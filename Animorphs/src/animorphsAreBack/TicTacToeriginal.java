@@ -54,8 +54,9 @@ public class TicTacToeriginal extends TicTacToe {
 	@Override
 	public int winner() {
 
-		int playerNumber = -1;
-
+		// if the board is a draw then the return is -1
+		int playerNumber = -1;		
+		
 		// Checking rows for a matching set.
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size - 1; j++) {
@@ -111,6 +112,17 @@ public class TicTacToeriginal extends TicTacToe {
 				} else {
 					playerNumber = -1;
 					break; // Saves time.
+				}
+			}
+		}
+		
+		if(playerNumber == -1){
+			
+			for(int i = 0; i < size; i++){
+				for(int j = 0; j < size; j++){
+					if(getBoard()[i][j] == 0){
+						playerNumber = 0;
+					}
 				}
 			}
 		}
