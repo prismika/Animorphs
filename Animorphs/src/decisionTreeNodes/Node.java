@@ -42,13 +42,16 @@ public abstract class Node {
 		}
 		return false;
 	}
+	public void setChild(int childIndex, Node newChild){
+		child[childIndex] = newChild;
+	}
 	
 	public Node getChild(int childNumber){
 		return child[childNumber];
 	}
 	
 	public boolean hasChildSlots(){
-		return child[0] != null || child[1] != null;
+		return child[0] == null || child[1] == null;
 	}
 	
 	public int getChildNumber(){
@@ -58,6 +61,11 @@ public abstract class Node {
 		if(child[1] != null)
 			total++;
 		return total;
+	}
+	
+	public void clearChildren(){
+		child[0] = null;
+		child[1] = null;
 	}
 	
 }
