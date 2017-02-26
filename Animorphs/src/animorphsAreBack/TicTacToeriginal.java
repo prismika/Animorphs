@@ -55,8 +55,8 @@ public class TicTacToeriginal extends TicTacToe {
 	public int winner() {
 
 		// if the board is a draw then the return is -1
-		int playerNumber = -1;		
-		
+		int playerNumber = -1;
+
 		// Checking rows for a matching set.
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size - 1; j++) {
@@ -115,12 +115,12 @@ public class TicTacToeriginal extends TicTacToe {
 				}
 			}
 		}
-		
-		if(playerNumber == -1){
-			
-			for(int i = 0; i < size; i++){
-				for(int j = 0; j < size; j++){
-					if(getBoard()[i][j] == 0){
+
+		if (playerNumber == -1) {
+
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < size; j++) {
+					if (getBoard()[i][j] == 0) {
 						playerNumber = 0;
 					}
 				}
@@ -133,23 +133,35 @@ public class TicTacToeriginal extends TicTacToe {
 
 	/**
 	 * From String method takes a string of values and converts them into a
-	 * board.
+	 * board (i.e. int[][])
 	 */
-	public TicTacToeriginal fromStringToBoard(String str) {
+	public int[][] fromStringToBoard(String str) {
 
 		if (str == null)
 			return null;
 
-		String tempString = "";
-
 		Scanner scn = new Scanner(str);
 
-		while (scn.hasNextInt()) {
-			tempString = tempString + scn.nextInt();
+		scn.useDelimiter("\\D");
+
+		String tempStr = "";
+
+		while (scn.hasNext()) {
+			tempStr = tempStr + scn.next();
+		}
+
+		int[][] returnArray = new int[size][size];
+
+		int h = 0;
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				returnArray[i][j] = Character.getNumericValue(tempStr.charAt(h));
+				h++;
+			}
 		}
 
 		scn.close();
-		return null;
+		return returnArray;
 
 	}
 

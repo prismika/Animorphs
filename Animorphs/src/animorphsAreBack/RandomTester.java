@@ -7,30 +7,23 @@ public class RandomTester {
 
 		int gameSize = 3;
 
-		int testBoard[][] = { { 2, 1, 2 }, 
-							  { 0, 1, 2 }, 
-							  { 2, 2, 1 } };
+		int testBoard[][] = { { 2, 1, 2 }, { 0, 1, 2 }, { 2, 2, 1 } };
 
 		TicTacToeriginal ttto = new TicTacToeriginal(testBoard, gameSize);
 
 		System.out.println(ttto.toString());
 
-		// Can use for a tester class to test the method winner().
+		int[][] testArray = ttto.fromStringToBoard(ttto.toString());
 
-		if (ttto.winner() == 1) {
-			System.out.println("Winner is X");
+		String temp = "";
+
+		// for (int i = 0; i < gameSize; i++) {
+		// temp = temp + Arrays.toString(testArray[i]) + "\n";
+		// }
+
+		for (int i = 0; i < gameSize; i++) {
+			System.out.println(Arrays.toString(testArray[i]));
 		}
 
-		if (ttto.winner() == 2) {
-			System.out.println("Winner is O");
-		}
-
-		if (ttto.winner() == -1) {
-			System.out.println("No winner!");
-		}
-
-		if (ttto.winner() == 0) {
-			System.out.println("Still able to move");
-		}
 	}
 }
