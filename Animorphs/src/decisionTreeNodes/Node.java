@@ -51,4 +51,13 @@ public abstract class Node {
 		return child[0] != null || child[1] != null;
 	}
 	
+	public int getChildNumber(){
+		int total = 0;
+		if(child[0] != null)
+			total ++;
+		if(child[1] != null)
+			total++;
+		return total;
+	}
+	
 }
