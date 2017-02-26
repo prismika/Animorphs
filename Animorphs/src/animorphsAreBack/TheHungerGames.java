@@ -23,8 +23,7 @@ public class TheHungerGames implements Runnable {
 
 		int startOrder = whoStartsFirst.nextInt(1);
 
-		int weiner = 0; // changes depending on the 
-		
+		int weiner = 0;
 		for (int i = 0; i < 2; i++) {
 			if (startOrder == 0) {
 
@@ -51,7 +50,7 @@ public class TheHungerGames implements Runnable {
 				weiner = ticTacTest.winner();
 
 			}
-			// Nifty math trick to switch the numbers
+			
 			startOrder = Math.abs(startOrder - 1);
 			
 		}
