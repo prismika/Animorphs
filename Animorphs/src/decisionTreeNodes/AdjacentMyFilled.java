@@ -1,6 +1,10 @@
 package decisionTreeNodes;
 
 public class AdjacentMyFilled extends Conditional{
+	public AdjacentMyFilled(String codon) {
+		super(codon);
+	}
+
 	@Override
 	public boolean decide(int row, int col, int[][] board, int player) {
 		for(int i = 0; i<3; i++){

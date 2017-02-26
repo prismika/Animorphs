@@ -2,6 +2,10 @@ package decisionTreeNodes;
 
 public class PlaceDown extends Terminal{
 
+	public PlaceDown(String codon) {
+		super(codon);
+	}
+
 	@Override
 	public void place(int x, int y, int[][] board, int player) {
 		for(int row = 0; row < board.length; row++){

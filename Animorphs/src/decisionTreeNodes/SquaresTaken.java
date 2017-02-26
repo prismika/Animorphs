@@ -2,6 +2,10 @@ package decisionTreeNodes;
 
 public class SquaresTaken extends Conditional{
 
+	public SquaresTaken(String codon) {
+		super(codon);
+	}
+
 	@Override
 	public boolean decide(int low, int high, int[][] board, int player) {
 		int total = 0;
