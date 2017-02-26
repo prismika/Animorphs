@@ -1,7 +1,7 @@
 package animorphsAreBack;
 
 public abstract class Player {
-	private int playerNumber;
+	protected int playerNumber;
 	Player(int playerNumber){
 		this.playerNumber = playerNumber;
 	}

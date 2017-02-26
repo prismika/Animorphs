@@ -41,12 +41,8 @@ public class CandidateAlgorithm extends Player {
 		}
 	}
 	
-	public void addToFitness(int fitnessPlus){
-		fitness += fitnessPlus;
-	}
-	public int getFitness(){
-		return fitness;
-	}
+	public void addToFitness(int fitnessPlus){fitness += fitnessPlus;}
+	public int getFitness(){return fitness;}
 	
 	private void constructStrategyTree() {//TODO Make sure to check that every dna string has at least CODONLENGTH elements
 		LinkedList<Node> nodesWithChildSlots = new LinkedList<>();
@@ -192,9 +188,28 @@ public class CandidateAlgorithm extends Player {
 
 	@Override
 	public void executeMove(int[][] board) {
-		// TODO Auto-generated method stub
-		//player is superclass variable
-		
+		if(!treeIsValid){
+			return;
+		}
+		Node current = root;
+		boolean done = false;
+		while(!done){
+			if(current.getChildNumber()==2){
+				//Is conditional
+				Conditional condition = (Conditional)current;
+				if(condition.decide(board, playerNumber)){
+					current = condition.getChild(1);
+				}else{
+					current = condition.getChild(0);
+				}
+				
+			}else{
+				//Is terminal
+				Terminal term = (Terminal)current;
+				term.place(board, playerNumber);
+				done = true;
+			}
+		}
 	}
 	
 	public String treeToString(){

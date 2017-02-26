@@ -7,7 +7,9 @@ public class Filled extends Conditional{
 	}
 
 	@Override
-	public boolean decide(int row, int col, int[][] board, int player) {
+	public boolean decide(int[][] board, int player) {
+		int row = args[0];
+		int col = args[1];
 		return board[row][col] > 0;
 	}
 	

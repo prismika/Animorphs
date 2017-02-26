@@ -3,7 +3,7 @@ package decisionTreeNodes;
 public abstract class Node {
 	private Node child[] = {null, null};
 	private boolean isRoot = false;
-	private int[] args = {0,0};
+	protected int[] args = {0,0};
 	private String codon;
 	
 	public Node(String codon){

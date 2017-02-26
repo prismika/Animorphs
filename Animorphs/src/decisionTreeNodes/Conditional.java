@@ -5,5 +5,5 @@ public abstract class Conditional extends Node{
 		super(codon);
 	}
 	
-	public abstract boolean decide(int x,int y, int[][] board, int player);
+	public abstract boolean decide(int[][] board, int player);
 }

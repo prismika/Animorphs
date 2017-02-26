@@ -5,7 +5,7 @@ public abstract class Terminal extends Node{
 	public Terminal(String codon){
 		super(codon);
 	}
-	public abstract void place(int x, int y, int[][] board, int player);
+	public abstract void place(int[][] board, int player);
 	
 	@Override
 	public boolean setChild(Node newChild){

@@ -7,7 +7,9 @@ public class SquaresTaken extends Conditional{
 	}
 
 	@Override
-	public boolean decide(int low, int high, int[][] board, int player) {
+	public boolean decide(int[][] board, int player) {
+		int low = args[0];
+		int high = args[1];
 		int total = 0;
 		for(int[] col : board){
 			for(int value : col){
